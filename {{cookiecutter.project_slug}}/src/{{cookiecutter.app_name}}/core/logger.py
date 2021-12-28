@@ -4,13 +4,13 @@ All modules use the same global logging object. No messages will be emitted
 until the logger is started.
 
 """
-from logging import Formatter
+from logging import Formatter, LoggerAdapter
 from logging import Logger as _Logger
 from logging import NullHandler
 from logging import StreamHandler
 
 
-__all__ = "logger", "Logger"
+__all__ = "logger", "Logger", "MDC"
 
 
 class Logger(_Logger):
@@ -31,7 +31,7 @@ class Logger(_Logger):
         # With a NullHandler, client code may make logging calls without regard
         # to whether the logger has been started yet. The standard Logger API
         # may be used to add and remove additional handlers, but the
-        # NullHandler should always be left in place. 
+        # NullHandler should always be left in place.
         super(Logger, self).__init__(name or __name__.split(".")[0])
         self.addHandler(NullHandler())  # default to no output
         return
@@ -79,3 +79,14 @@ class Logger(_Logger):
 
 
 logger = Logger()
+
+
+class MDC(LoggerAdapter):
+    """
+    This example adapter expects the passed in dict-like object to have a
+    'connid' key, whose value in brackets is prepended to the log message.
+    """
+
+    def process(self, msg, kwargs):
+        import json
+        return '%s %s' % (json.dumps(self.extra, default=str), msg), kwargs

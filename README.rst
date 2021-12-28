@@ -44,6 +44,7 @@ Install Python requirements for using the template:
 .. code-block:: console
 
   $ python -m pip install --user --requirement=requirements.txt
+  $ PYTHONPATH=./src python -m jd_edu_sport_fix.cli hello
 
 
 Create a new project directly from the template on `GitHub`_:

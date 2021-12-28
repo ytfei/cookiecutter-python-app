@@ -54,7 +54,7 @@ def _args(argv):
     parser.add_argument("-v", "--version", action="version",
             version=f"{{ cookiecutter.app_name }} {__version__}",
             help="print version and exit")
-    parser.add_argument("-w", "--warn", default="WARN",
+    parser.add_argument("-w", "--warn", default="",
             help="logger warning level [WARN]")
     parser.set_defaults(command=None)
     subparsers = parser.add_subparsers(title="subcommands")

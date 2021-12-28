@@ -4,6 +4,7 @@ MANIFEST
 build/
 dist/
 *.egg-info/
+__pycache__/
 *.pyc
 *.pyo
 
@@ -16,6 +17,7 @@ dist/
 # Ignore virtualenv environments.
 
 .venv*/
+env/
 
 
 # Ignore Vagrant runtime files.
