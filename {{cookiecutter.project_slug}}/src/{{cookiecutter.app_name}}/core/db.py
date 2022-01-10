@@ -8,7 +8,7 @@ from .logger import logger
 from .config import config
 from enum import Enum
 
-__all__ = "get_engine", "execute", "query_one", "query", "connect"
+__all__ = "get_engine", "execute", "query_one", "query", "connect", "query_all"
 
 
 class DbType(Enum):
