@@ -37,7 +37,7 @@ class Conn(object):
                     f"using direct connection:{config.db.connection_str}")
                 Conn._engine = create_engine(config.db.connection_str)
             else:
-                _prefix = DbType[config.db.type.upper()]
+                _prefix = DbType[config.db.type.upper()].value
 
                 logger.info(
                     f"initialize db engine to {_prefix}://{config.db.host}:{config.db.port}/{config.db.database}")
@@ -53,21 +53,29 @@ def get_engine():
     return Conn._engine
 
 
-def execute(sql, params=None):
+def execute(sql, params=None, callback=None):
     statement = text(sql)
 
     with connect() as con:
-        return con.execute(statement, params)
+        rs = con.execute(statement, params)
+
+        if callback:
+            return callback(rs)
+        else:
+            return rs
 
 
 def query_one(sql, params=None):
-    rs = execute(sql, params)
-    row = rs.fetchone()
-    return dict(row)
+    def callback(rs): return dict(rs.fetchone())
+    return execute(sql, params=params, callback=callback)
 
 
-def query(sql, params=None):
-    rs = execute(sql, params)
-    return [dict(row) for row in rs.fetchall()]
+def query_all(sql, params=None):
+    def callback(rs): return [dict(row) for row in rs.fetchall()]
+    return execute(sql, params=params, callback=callback)
+
+
+def query(sql, params=None, callback=None):
+    return execute(sql, params=params, callback=callback)
 
 # TODO: with in Transaction
