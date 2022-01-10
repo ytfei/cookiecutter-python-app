@@ -2,3 +2,13 @@
 ##
 core:
   logging: WARN
+
+db:
+  type: mysql
+  host: mysql-cn-north-1-f4c4d29ce3194f72.rds.jdcloud.com
+  port: 3306
+  username: ks_jdtest_write
+  password: jdah8r1K1OKNEK3CCCC
+  database: jd_sport_edu
+  connection_str: 
+  #connection_str: sqlite+pysqlite:///:memory:

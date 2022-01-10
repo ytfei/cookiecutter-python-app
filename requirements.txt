@@ -3,3 +3,5 @@
 ##   python -m pip install --requirement=requirements.txt
 ##
 cookiecutter>=1.6
+SQLAlchemy==1.4.29
+PyMySQL==1.0.2
